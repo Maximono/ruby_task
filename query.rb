@@ -14,4 +14,9 @@ class Query
     result.has_key?(:sort) ? @result[:sort].merge!(options_hash) : result[:sort] = options_hash
     self
   end
+
+  def size(arg)
+    arg.is_a?(Integer) ? @result[:size] = arg : raise(TypeError, 'wrong argument type')
+    self
+  end
 end
