@@ -11,7 +11,7 @@ class Query
       element.is_a?(Hash) ? options_hash.merge!(element) : options_hash[element]
     end
 
-    result.has_key?(:sort) ? @result[:sort].merge!(options_hash) : result[:sort] = options_hash
+    @result.has_key?(:sort) ? @result[:sort].merge!(options_hash) : result[:sort] = options_hash
     self
   end
 
@@ -22,6 +22,11 @@ class Query
 
   def from(arg)
     arg.is_a?(Integer) ? @result[:from] = arg : raise(TypeError, 'wrong argument type')
+    self
+  end
+
+  def filter(options_hash = {})
+    @result.has_key?(:query) ? @result[:query].merge!(options_hash) : result[:query] = options_hash
     self
   end
 end

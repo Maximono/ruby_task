@@ -61,4 +61,22 @@ RSpec.describe Query do
       expect { query.from('10') }.to raise_error(TypeError, 'wrong argument type')
     end
   end
+
+  describe '#filter' do
+    before {query.filter({status: {eq: 2}})}
+
+    it 'should return self' do
+      expect(query.filter).to be_instance_of(Query)
+    end
+
+    it 'should set query key in result hash' do
+      expect(query.result).not_to be_empty
+    end
+
+    it 'should add filter values to existing filter values' do
+      query.filter({requests: {lt: 4}})
+      expect(query.result[:query]).to eq({status: {eq: 2},
+                                          requests: {lt: 4}})
+    end
+  end
 end
