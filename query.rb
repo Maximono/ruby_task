@@ -9,30 +9,51 @@ class Query
 
   def sort(*options)
     options_hash = Hash.new { |options_hash, key| options_hash[key] = :asc }
+
     options.each do |element|
       element.is_a?(Hash) ? options_hash.merge!(element) : options_hash[element]
     end
 
-    @result.has_key?(:sort) ? @result[:sort].merge!(options_hash) : result[:sort] = options_hash
+    if @result[:sort]
+      @result[:sort].merge!(options_hash)
+    else
+      result[:sort] = options_hash
+    end
+
     self
   end
 
   def size(arg)
-    arg.is_a?(Integer) ? @result[:size] = arg : raise(TypeError, 'wrong argument type')
+    if arg.is_a?(Integer)
+      @result[:size] = arg
+    else
+      raise(TypeError, 'wrong argument type')
+    end
+
     self
   end
 
   def from(arg)
-    arg.is_a?(Integer) ? @result[:from] = arg : raise(TypeError, 'wrong argument type')
+    if arg.is_a?(Integer)
+      @result[:from] = arg
+    else
+      raise(TypeError, 'wrong argument type')
+    end
+
     self
   end
 
   def filter(options_hash = {})
-    @result.has_key?(:query) ? @result[:query].merge!(options_hash) : result[:query] = options_hash
+    if @result[:query]
+      @result[:query].merge!(options_hash)
+    else
+      result[:query] = options_hash
+    end
+
     self
   end
 
   def to_json
-    @result.to_json
+    result.to_json
   end
 end
