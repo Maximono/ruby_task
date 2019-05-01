@@ -19,4 +19,9 @@ class Query
     arg.is_a?(Integer) ? @result[:size] = arg : raise(TypeError, 'wrong argument type')
     self
   end
+
+  def from(arg)
+    arg.is_a?(Integer) ? @result[:from] = arg : raise(TypeError, 'wrong argument type')
+    self
+  end
 end

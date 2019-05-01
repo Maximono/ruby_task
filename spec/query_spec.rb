@@ -41,4 +41,24 @@ RSpec.describe Query do
       expect { query.size('20') }.to raise_error(TypeError, 'wrong argument type')
     end
   end
+
+  describe '#from' do
+    before { query.from(5) }
+
+    it 'should return self' do
+      expect(query.from(10)).to be_instance_of(Query)
+    end
+
+    it 'should set from key in result hash' do
+      expect(query.result).not_to be_empty
+    end
+
+    it 'should replace from value in result hash' do
+      expect { query.from(10) }.to change { query.result[:from] }.from(5).to(10)
+    end
+
+    it 'should raise type error' do
+      expect { query.from('10') }.to raise_error(TypeError, 'wrong argument type')
+    end
+  end
 end
