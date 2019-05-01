@@ -1,3 +1,5 @@
+require 'json'
+
 class Query
   attr_reader :result
 
@@ -28,5 +30,9 @@ class Query
   def filter(options_hash = {})
     @result.has_key?(:query) ? @result[:query].merge!(options_hash) : result[:query] = options_hash
     self
+  end
+
+  def to_json
+    @result.to_json
   end
 end

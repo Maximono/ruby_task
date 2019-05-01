@@ -79,4 +79,11 @@ RSpec.describe Query do
                                           requests: {lt: 4}})
     end
   end
+
+  describe '#to_json' do
+    it 'should return json' do
+      expect(query.filter({requests: {lt: 4}}).from(5).size(10).to_json).
+          to eq("{\"query\":{\"requests\":{\"lt\":4}},\"from\":5,\"size\":10}")
+    end
+  end
 end
